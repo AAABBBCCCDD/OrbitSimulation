@@ -40,7 +40,6 @@
         <button id="pause-button" onclick="pauseBtnClick()">Pause</button>
         <button id="show-info" onclick="showInfo = true">Show Info</button>
         <button id="clear-system" onclick="innerSolarSystem.masses = []; showInfo = false; graphs = false; selectedNum = 0">Clear System</button>
-        <button id="fullscreen" onclick="fullScreenBtn">Fullscreen</button>
         <label id="scaleLabel" for="scaleInput">Scale</label>
         <input type="number" id="scaleInput" value="70" min="0">
         <button id="hide-button" onclick="hideBtnClick()"></button>
@@ -58,24 +57,10 @@
     var key;
     var keyRegistered = false;
     var graphs = false;
-    if(!document.fullscreenEnabled) {
-        document.getElementById("fullscreen").visibility = "none";
-    }
     const btnStyleVisibility = document.getElementById("reset-button").style.visibility;
     window.addEventListener("keypress", updateKey, false);
     function updateKey(e) {
         key = e.key;
-    }
-    function fullScreenBtn(){
-        var fullSim = document.getElementById("canvas");
-        var fullScreenBtn = document.getElementById("fullscreen");
-        if(document.fullscreenElement){
-            fullScreenBtn.content = "Fullscreen";
-            document.exitFullscreen();
-        } else {
-            fullScreenBtn.content = "Exit Fullscreen";
-            fullSim.requestFullscreen();
-        }
     }
     function hideBtnClick() {
         if (hidden) {
