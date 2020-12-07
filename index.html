@@ -126,6 +126,7 @@
     }
     return x;
   }
+  var speed = document.getElementById("speedInput").value;
   class nBodyProblem {
     constructor(params) {
       this.g = params.g;
@@ -134,13 +135,14 @@
 
       this.masses = params.masses;
     }
-
+    
+    
     updatePositionVectors() {
       const massesLen = this.masses.length;
 
       for (let i = 0; i < massesLen; i++) {
         const massI = this.masses[i];
-
+        speed = document.getElementById("speedInput").value;
         massI.x += massI.vx * this.dt * speed;
         massI.y += massI.vy * this.dt * speed;
         massI.z += massI.vz * this.dt * speed;
@@ -154,7 +156,7 @@
 
       for (let i = 0; i < massesLen; i++) {
         const massI = this.masses[i];
-
+        speed = document.getElementById("speedInput").value;
         massI.vx += massI.ax * this.dt * speed;
         massI.vy += massI.ay * this.dt * speed;
         massI.vz += massI.az * this.dt * speed;
@@ -162,7 +164,6 @@
     }
 
     updateAccelerationVectors() {
-      var speed = document.getElementById("speedInput").value;
       const massesLen = this.masses.length;
 
       for (let i = 0; i < massesLen; i++) {
