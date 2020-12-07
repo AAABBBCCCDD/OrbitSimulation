@@ -54,6 +54,7 @@
    * Gravitational n-body algorithm
    */
   document.getElementById("hide-button").textContent = "<";
+  var warnedSpeed = false;
   var fullscreenE = false;
   var hidden = false;
   var lastTimeFocused = 0;
@@ -517,6 +518,10 @@
   const animate = () => {
     width = (canvas.width = window.innerWidth);
     height = (canvas.height = window.innerHeight);
+    if(!warnedSpeed && speed > 5){
+        alert("Changing Speed above 5 can cause the system to behave unrealistically")
+        warnedSpeed = true
+    }
     /*
      * Advance our simulation by one step
      */
