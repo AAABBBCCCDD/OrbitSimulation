@@ -141,9 +141,9 @@
       for (let i = 0; i < massesLen; i++) {
         const massI = this.masses[i];
 
-        massI.x += massI.vx * this.dt;
-        massI.y += massI.vy * this.dt;
-        massI.z += massI.vz * this.dt;
+        massI.x += massI.vx * this.dt * speed;
+        massI.y += massI.vy * this.dt * speed;
+        massI.z += massI.vz * this.dt * speed;
       }
 
       return this;
@@ -155,9 +155,9 @@
       for (let i = 0; i < massesLen; i++) {
         const massI = this.masses[i];
 
-        massI.vx += massI.ax * this.dt;
-        massI.vy += massI.ay * this.dt;
-        massI.vz += massI.az * this.dt;
+        massI.vx += massI.ax * this.dt * speed;
+        massI.vy += massI.ay * this.dt * speed;
+        massI.vz += massI.az * this.dt * speed;
       }
     }
 
@@ -192,9 +192,9 @@
           }
         }
 
-        massI.ax = ax * speed;
-        massI.ay = ay * speed;
-        massI.az = az * speed;
+        massI.ax = ax;
+        massI.ay = ay;
+        massI.az = az;
       }
 
       return this;
