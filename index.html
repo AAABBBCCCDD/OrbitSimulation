@@ -67,6 +67,7 @@
   var graphs = false;
   var rotX = 0;
   var rotY = 0;
+	var rotZ = 0;
   const btnStyleVisibility = document.getElementById("reset-button").style.visibility;
   window.addEventListener("keypress", updateKey, false);
   var advOptTog = false;
@@ -671,28 +672,51 @@
        * So that it is centered smack in the middle of the canvas
        */
       if(ThreeD){
-         
-         if(key == "w") {
-          rotY += Math.PI / 100; 
-         }
-         if(key == "s") {
-          rotY -= Math.PI / 100;
-         }
-         if(key == "d") {
-          rotX += Math.PI / 100;
-         }
-         if(key == "a") {
-          rotX -= Math.PI / 100;
-         }
-         const scaleAxis = 100;
-         ctx.moveTo(scaleAxis,scaleAxis - Math.sin(rotY) * scaleAxis / 2 + 25);
-         ctx.lineTo(scaleAxis, scaleAxis + Math.sin(rotY) * scaleAxis / 2 + 25)
+         const mS = Math.PI / 100;
+         switch(key) {
+					 case "w":
+					 		rotY += mS
+					 break;
+
+					 case "s":
+					 		rotY -= mS
+					 break;
+
+					 case "a":
+					 		rotX += mS
+					 break;
+
+					 case "d":
+					 		rotX -= mS
+					 break;
+
+					 case "q":
+					 		rotZ += mS
+					 break;
+
+					 case "e":
+					 		rotZ -= mS
+					 break;
+				 }
+         const sA = 100;
+				 var oldstroke = ctx.strokeStyle;
+				 //X Axis
+				 ctx.strokeStyle = "#00FF00";
+				 var pX = project([rotY])
+				 ctx.moveTo(sA + xAVx,sA + xAVy);
+				 ctx.lineTo(sA - xAVx,sA - xAVy)
          ctx.stroke();
-         var oldstroke = ctx.strokeStyle;
+				 ctx.fillText("X", sA + xAVx, sA + xAVy);
          ctx.strokeStyle= "#FF0000";
-         ctx.moveTo(scaleAxis - Math.sin(rotX) * scaleAxis / 2, scaleAxis + 25);
-         ctx.lineTo(scaleAxis + Math.sin(rotX) * scaleAxis / 2, scaleAxis + 25)
+				 var yAVx = Math.sin(rotZ) * sA / 2;
+				 var yAVy = Math.cos(rotZ) * Math.cos(rotY) * sA / 2;
+				 ctx.moveTo(sA + yAVx, sA + yAVy);
+				 ctx.lineTo(sA - yAVx, sA - yAVy);
+				 ctx.fillText("Y", sA + yAVx, sA + yAVy);
          ctx.stroke();
+				 ctx.strokeStyle = "#0000FF";
+
+				 ctx.stroke();
          ctx.strokeStyle = oldstroke
          y = height / 2 + (massI.y * Math.cos(rotY) + massI.z * Math.sin(rotY)) * scale;
          x = width / 2 + (massI.x * Math.cos(rotX) + massI.z * Math.sin(rotX)) * scale;
@@ -703,11 +727,6 @@
       /*
        * Draw our motion trail
        */
-      /*  Drawing In 3d Mode
-      *
-      *
-      *
-      */
      
         massI.manifestation.draw(x, y, massI.c);
       /*
