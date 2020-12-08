@@ -23,7 +23,7 @@
     border: 1px solid #545454;
   }
 
-  #controls-wrapper>input {
+  #advancedOptions>input {
     width: 100px;
     height: 20px;
   }
@@ -41,10 +41,13 @@
   <button id="pause-button" onclick="pauseBtnClick()">Pause</button>
   <button id="show-info" onclick="showInfo = true">Show Info</button>
   <button id="clear-system" onclick="innerSolarSystem.masses = []; showInfo = false; graphs = false; selectedNum = 0">Clear System</button>
-  <label id="scaleLabel" for="scaleInput">Scale</label>
-  <input type="number" id="scaleInput" value="70" min="0">
-  <label id="speedLabel" for="speedInput">Speed</label>
-  <input type="number" id="speedInput" value="1" min="0.1" step="0.1" max="10">
+  <button id="advancedOptionsBtn" onclick="toggleAdvOptions()">Adv. Options</button>
+  <section id="advancedOptions">
+    <label id="scaleLabel" for="scaleInput">Scale</label>
+    <input type="number" id="scaleInput" value="70" min="0">
+    <label id="speedLabel" for="speedInput">Speed</label>
+    <input type="number" id="speedInput" value="1" min="0.1" step="0.1" max="10">
+  </section>
   <button id="hide-button" onclick="hideBtnClick()"></button>
 </section>
 <canvas id="canvas"></canvas>
@@ -63,6 +66,19 @@
   var graphs = false;
   const btnStyleVisibility = document.getElementById("reset-button").style.visibility;
   window.addEventListener("keypress", updateKey, false);
+  var advOptTog = false;
+  
+  
+  document.getElementById("advancedOptions").style.display = "none";
+  function toggleAdvOptions() {
+    if (advOptTog) {
+      advOptTog = false;
+      document.getElementById("advancedOptions").style.display = "none";
+    } else {
+      advOptTog = true;
+      document.getElementById("advancedOptions").style.display = btnStyleVisibility;
+    }
+  }
 
   function updateKey(e) {
     key = e.key;
@@ -72,30 +88,26 @@
     if (hidden) {
       hidden = false;
       var value = btnStyleVisibility;
-      document.getElementById("reset-button").style.display = value;
-      document.getElementById("pause-button").style.display = value;
-      document.getElementById("show-info").style.display = value;
-      document.getElementById("clear-system").style.display = value;
-      document.getElementById("massLabel").style.display = value;
-      document.getElementById("masses-list").style.display = value;
-      document.getElementById("scaleLabel").style.display = value;
-      document.getElementById("scaleInput").style.display = value;
-      document.getElementById("speedLabel").style.display = value;
-      document.getElementById("speedInput").style.display = value;
+      var nodes = document.getElementById('controls-wrapper').childNodes;
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].nodeName.toLowerCase() == 'button') {
+          nodes[i].style.display = btnStyleVisibility;
+        }
+      }
       document.getElementById("hide-button").textContent = "<";
     } else {
       hidden = true;
       var value = "none";
-      document.getElementById("reset-button").style.display = value;
-      document.getElementById("pause-button").style.display = value;
-      document.getElementById("show-info").style.display = value;
-      document.getElementById("clear-system").style.display = value;
-      document.getElementById("massLabel").style.display = value;
-      document.getElementById("masses-list").style.display = value;
-      document.getElementById("scaleLabel").style.display = value;
-      document.getElementById("scaleInput").style.display = value;
-      document.getElementById("speedLabel").style.display = value;
-      document.getElementById("speedInput").style.display = value;
+      var nodes = document.getElementById('controls-wrapper').childNodes;
+      advOptTog = false;
+      document.getElementById("advancedOptions").style.display = "none";
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].nodeName.toLowerCase() == 'button') {
+          nodes[i].style.display = "none";
+        }
+      }
+
+      document.getElementById("hide-button").style.display = btnStyleVisibility;
       document.getElementById("hide-button").textContent = ">";
     }
   }
@@ -136,8 +148,8 @@
 
       this.masses = params.masses;
     }
-    
-    
+
+
     updatePositionVectors() {
       const massesLen = this.masses.length;
 
@@ -518,9 +530,9 @@
   const animate = () => {
     width = (canvas.width = window.innerWidth);
     height = (canvas.height = window.innerHeight);
-    if(!warnedSpeed && speed > 5){
-        alert("Changing Speed above 5 can cause the system to behave unrealistically")
-        warnedSpeed = true
+    if (!warnedSpeed && speed > 5) {
+      alert("Changing Speed above 5 can cause the system to behave unrealistically")
+      warnedSpeed = true
     }
     /*
      * Advance our simulation by one step
