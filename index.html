@@ -29,7 +29,7 @@
   }
 
 </style>
-<section id="controls-wrapper">
+<section id="controls-wraper">
   <label id="massLabel">Mass of Added Planet</label>
   <select id="masses-list">
     <option value="0.000003003">Earth</option>
@@ -67,8 +67,8 @@
   const btnStyleVisibility = document.getElementById("reset-button").style.visibility;
   window.addEventListener("keypress", updateKey, false);
   var advOptTog = false;
-  
-  
+
+
   document.getElementById("advancedOptions").style.display = "none";
   function toggleAdvOptions() {
     if (advOptTog) {
@@ -413,6 +413,8 @@
     selectedNum = 0;
     graphs = false;
     document.getElementById("scaleInput").value = 70;
+
+	  document.getElementById("speedInput").value = 1;
   }, false);
 
   /*
